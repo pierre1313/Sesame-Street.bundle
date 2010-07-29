@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://www.sesamestreet.org"
+        plugin="http://www.sesamestreet.org/DAMAsset/street/.*.swf"
+            initialState="loading"
+            version="1.0">
+            
+    <crop x="241" y="23" width="400" height="300" />
+
+    <seekbar type="thumb">
+        <start x="272" y="351" />
+        <end   x="512" y="351" />
+        <played>
+					<condition>
+           	<color op="dimmer-than" rgb="a0a0a0" />
+					</condition>
+        </played>
+    </seekbar>
+                
+		<!-- Set Colors for Paused Video -->
+    <condition name="paused">
+        <color x="259" y="343" rgb="5aee49" />
+    </condition>
+    
+    <state name="loading">
+        <event>
+            <condition>
+                <and>
+                    <color x="361" y="346" rgb="12c80e" />
+                    <color x="376" y="346" rgb="12c80e" />
+                </and>
+            </condition>
+            <action>
+                <click x="260" y="343" />
+                <click x="1" y="1" />
+								<pause time="1000" />
+                <goto state="playing" />
+            </action>
+        </event>
+    </state>
+    
+		<!-- PLAYING -->
+    <state name="playing">
+        
+			<!-- Click to pause -->
+        <event>
+            <condition>
+                <command name="pause" />
+            </condition>
+            <action>
+                <click x="260" y="343" />
+                <click x="1" y="1" />
+            </action>
+        </event>
+
+					<!-- Detect paused video -->
+        <event>
+            <condition>
+                <condition name="paused" />
+            </condition>
+            <action>
+                <goto state="paused" />
+            </action>
+        </event>
+    </state>
+        
+    
+		<!-- PAUSED -->
+    <state name="paused">
+        <event>
+            <condition>
+                <command name="play" />
+            </condition>
+            <action>
+                <click x="260" y="343" />
+                <click x="1" y="1" />
+            </action>
+        </event>
+				
+				<!-- Detect end of video -->
+        <event>
+            <condition>
+                <title matches="." />
+            </condition>
+            <action>
+								<goto state="end" />
+            </action>
+        </event>
+                
+				<!-- Go To Playing -->
+        <event>
+            <condition>
+                <not>
+                    <condition name="paused" />
+                </not>
+            </condition>
+            <action>
+                <goto state="playing" />
+            </action>
+        </event>
+        
+    </state>
+</site>
