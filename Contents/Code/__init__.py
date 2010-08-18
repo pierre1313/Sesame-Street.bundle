@@ -1,7 +1,4 @@
 import re, urllib
-from PMS import *
-from PMS.Objects import *
-from PMS.Shortcuts import *
 
 WEB_ROOT = 'http://www.sesamestreet.org'
 SEARCH_PAGE = 'http://www.sesamestreet.org/browseallvideos?p_p_id=browsegpv_WAR_browsegpvportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view'
@@ -28,7 +25,7 @@ def MainMenu():
 
 ####################################################################################################
 def Browse(sender, url, title = None, replaceParent=False, values=None):
-    page = XML.ElementFromURL(url, cacheTime=1200, isHTML=True, values=values)
+    page = HTML.ElementFromURL(url, cacheTime=1200, values=values)
     dir = MediaContainer(title1="Sesame Street", title2=title, replaceParent=replaceParent)
     for tag in page.xpath("//div[@class='viewby-content-display']//td | //div[@class='tile-content-display']//td"):
         if tag.xpath(".//div"):
