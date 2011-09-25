@@ -32,7 +32,8 @@ def Browse(sender, url, title = None, replaceParent=False, values=None):
             dir.viewGroup='Details'
             dir.Append(CreateVideo(tag))            
         else:
-            dir.Append(CreateCategory(tag))
+            if XML.StringFromElement(tag) != "<td></td>":
+              dir.Append(CreateCategory(tag))
 
             
     AddPager(page, dir, title)  
@@ -49,6 +50,7 @@ def CreateVideo(tag):
 
 ####################################################################################################
 def CreateCategory(tag):
+    Log(XML.StringFromElement(tag))
     url = tag.xpath("./a")[0].get('href')
 	# http://www.sesamestreet.org/browseallvideos?p_p_id=browsegpv_WAR_browsegpvportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-2&p_p_col_count=1&_browsegpv_WAR_browsegpvportlet_elementType=subject&_browsegpv_WAR_browsegpvportlet_subject=Alphabet+%2F+Letters
     #urlParts = re.match("doSearch\('([^']*)','([^']*)", url)
